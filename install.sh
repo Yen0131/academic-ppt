@@ -4,7 +4,16 @@
 # ================================================
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# 嘗試找出專案目錄（支援 curl|bash 與本地執行兩種模式）
+if [ -f "$(dirname "$0")/SKILL.md" ]; then
+    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+elif [ -f "./SKILL.md" ]; then
+    SCRIPT_DIR="$(pwd)"
+else
+    echo "ERROR: 無法找到 SKILL.md，請確認在專案目錄下執行，或手動指定路徑"
+    exit 1
+fi
+
 TARGET_DIR="$HOME/.hermes/skills/productivity/academic-ppt"
 
 echo "=========================================="
